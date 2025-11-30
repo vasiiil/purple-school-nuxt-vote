@@ -1,10 +1,21 @@
 :root {
-  --font-family: "Roboto", sans-serif;
-  --color-black: #191919;
-  --color-black-soft: #292929;
-  --color-white: #FFFFFF;
+	--font-family: "Roboto", sans-serif;
+	--color-black: #191919;
+	--color-black-soft: #292929;
+	--color-white: #FFFFFF;
+	--color-gray: #E6E6E6;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
 }
 
 body {
-  font-family: var(--font-family);
+	font-family: var(--font-family);
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
