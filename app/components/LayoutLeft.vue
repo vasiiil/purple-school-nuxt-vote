@@ -17,6 +17,10 @@
 
 <style scoped>
 .layout__block {
+	position: fixed;
+	left: 0;
+	top: 0;
+	
 	height: 100vh;
 	padding: 42px 28px 45px;
 	display: flex;
