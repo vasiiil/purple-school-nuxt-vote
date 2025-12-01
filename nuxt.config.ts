@@ -10,6 +10,25 @@ export default defineNuxtConfig({
 			},
 		],
 	},
+	postcss: {
+		plugins: {
+			'postcss-nested': {},
+		},
+	},
+	app: {
+		pageTransition: {
+			name: 'page-transition',
+			mode: 'out-in',
+		},
+		head: {
+			link: [
+				{
+					rel: 'stylesheet',
+					href: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
+				},
+			],
+		},
+	},
 
 	modules: [
 		'@nuxt/eslint',
