@@ -1,7 +1,7 @@
 <template>
 	<div class="root">
 		<PostView
-			v-for="post of posts"
+			v-for="post of postsData?.posts"
 			:key="`post-view-${post.id}`"
 			:post="post"
 		/>
@@ -9,17 +9,18 @@
 </template>
 
 <script setup lang="ts">
-import type { IPost } from '~/components/post/PostView.vue';
+import type { IGetPostsResponse } from '~/interfaces/post.interface';
 
-const posts = ref<IPost[]>([]);
-for (let i = 2; i < 5; i++) {
-	posts.value.push({
-		date: `${i} дня назад`,
-		title: `Добавить функцию голосования для ${i}-го поста`,
-		text: `${i}: Попробовать добавить в приложение функцию голосования, которая позволит определить, какая фича более полезна, а какая нет. После добавления поста появляется Попробовать добавить в приложение функцию голосования, которая позволит определить, какая фича более полезна, а какая нет. Попробовать добавить в приложение функцию голосования, которая позволит определить, какая фича более полезна, а какая нет. Попробовать добавить в приложение функцию голосования, которая позволит определить, какая фича более полезна, а какая нет.`,
-		likeCount: i * 5,
-		dislikeCount: i * 2,
-		id: i,
-	});
-}
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiurl;
+const { data: postsData } = await useFetch<IGetPostsResponse>(
+	`${apiUrl}/posts`,
+	{
+		query: {
+			page: 1,
+			page_size: 10,
+			sort: 'date',
+		},
+	}
+);
 </script>

@@ -1,21 +1,28 @@
 <template>
 	<div class="root">
-		<div class="content">Post [{{ id }}] Page</div>
+		<div class="root">
+			<PostView
+				v-if="post"
+				:post="post"
+				full
+			/>
+		</div>
 		<ActionButton @click="goBack">Назад</ActionButton>
 	</div>
 </template>
 
 <script setup lang="ts">
+import type { IPost } from '~/interfaces/post.interface';
+
 const route = useRoute();
 const router = useRouter();
 const id = ref(route.params.id);
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiurl;
+const { data: post } = await useFetch<IPost>(`${apiUrl}/posts/${id.value}`);
 function goBack() {
 	router.go(-1);
 }
 </script>
 
-<style scoped>
-.content {
-	margin-bottom: 20px;
-}
-</style>
+<style scoped></style>
