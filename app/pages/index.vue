@@ -18,10 +18,21 @@
 				</NuxtLink>
 			</div>
 		</div>
-		<PostView
-			v-for="post of postsData?.posts"
+		<template
+			v-for="(post, index) of postsData?.posts"
 			:key="`post-view-${post.id}`"
-			:post="post"
+		>
+			<PostView :post="post" />
+			<div
+				v-if="index !== (postsData?.posts?.length ?? 0) - 1"
+				class="divider"
+			/>
+		</template>
+
+		<PaginationComp
+			v-model="page"
+			:total-count="postsData?.total ?? 0"
+			:page-size="pageSize"
 		/>
 	</div>
 </template>
@@ -39,12 +50,15 @@ const page = ref<number>(parseInt(route.query.page?.toString() ?? '1') || 1);
 const sort = ref<'date' | 'rating'>(
 	route.query.sort === 'rating' ? 'rating' : 'date'
 );
+const pageSize = ref<number>(
+	parseInt(route.query.page_size?.toString() ?? '10') || 10
+);
 watchEffect(() => {
 	router.replace({ query: { page: page.value, sort: sort.value } });
 });
 const query = computed(() => ({
 	page: route.query.page || 1,
-	page_size: 10,
+	page_size: route.query.page_size || 10,
 	sort: route.query.sort || 'date',
 }));
 const { data: postsData } = await useFetch<IGetPostsResponse>(
@@ -60,6 +74,10 @@ const { data: postsData } = await useFetch<IGetPostsResponse>(
 	display: flex;
 	flex-direction: column;
 	gap: 38px;
+
+	.divider {
+		border-bottom: 1px solid var(--color-gray);
+	}
 }
 
 .filter {

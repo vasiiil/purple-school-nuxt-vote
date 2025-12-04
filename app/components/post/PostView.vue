@@ -124,15 +124,6 @@ const diffDaysStr = computed(() => {
 
 <style scoped>
 .root {
-	padding-bottom: 35px;
-
-	&:last-child {
-		margin-bottom: 25px;
-	}
-	&:not(:last-child) {
-		border-bottom: 1px solid var(--color-gray);
-	}
-
 	.post {
 		display: flex;
 		flex-direction: column;
