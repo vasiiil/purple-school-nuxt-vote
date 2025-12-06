@@ -42,23 +42,41 @@
 			</div>
 			<div class="post__bottom">
 				<div class="post__bottom-part">
-					<div class="post__bottom-part-icon-text">
-						<div class="icon">
+					<div class="post__bottom-part-item">
+						<Icon
+							v-if="votesStore.isLike(post.id)"
+							name="icons:like-filled"
+							size="18px"
+						/>
+						<button
+							v-else
+							class="button-icon"
+							@click="onLikeClick"
+						>
 							<Icon
 								name="icons:like"
 								size="18px"
 							/>
-						</div>
+						</button>
 						<div class="text">{{ post.likes }}</div>
 					</div>
 
-					<div class="post__bottom-part-icon-text">
-						<div class="icon">
+					<div class="post__bottom-part-item">
+						<Icon
+							v-if="votesStore.isDislike(post.id)"
+							name="icons:dislike-filled"
+							size="18px"
+						/>
+						<button
+							v-else
+							class="button-icon"
+							@click="onDislikeClick"
+						>
 							<Icon
 								name="icons:dislike"
 								size="18px"
 							/>
-						</div>
+						</button>
 						<div class="text">{{ post.dislikes }}</div>
 					</div>
 				</div>
@@ -66,22 +84,22 @@
 					v-if="!full"
 					class="post__bottom-part"
 				>
-					<div class="post__bottom-part-icon-text">
-						<div class="icon">
+					<div class="post__bottom-part-item">
+						<button class="button-icon">
 							<Icon
 								name="icons:trash"
 								size="18px"
 							/>
-						</div>
+						</button>
 					</div>
-					<div class="post__bottom-part-icon-text">
-						<div class="icon">
+					<div class="post__bottom-part-item">
+						<button class="button-icon">
 							<Icon
 								name="icons:edit"
 								size="18px"
 							/>
-						</div>
-						<div class="text edit">Изменить</div>
+							<div class="text edit">Изменить</div>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -93,14 +111,22 @@
 import type { IPost } from '~/interfaces/post.interface';
 import { diff } from '~/utils/date';
 
-const { post, full = false } = defineProps<{
+const votesStore = useVotesStore();
+const props = defineProps<{
 	post: IPost;
 	full?: boolean;
 }>();
-const diffDays = diff(new Date(post.published_at));
+const post = ref<IPost>(props.post);
+async function onLikeClick() {
+	post.value = await votesStore.like(post.value.id);
+}
+async function onDislikeClick() {
+	post.value = await votesStore.dislike(post.value.id);
+}
+const diffDays = diff(new Date(post.value.published_at));
 const diffDaysStr = computed(() => {
 	if (diffDays === null) {
-		return new Date(post.published_at).toLocaleString();
+		return new Date(post.value.published_at).toLocaleString();
 	}
 	if (diffDays === 0) {
 		return 'сегодня';
@@ -118,22 +144,12 @@ const diffDaysStr = computed(() => {
 		return 'неделю назад';
 	}
 
-	return new Date(post.published_at).toLocaleString();
+	return new Date(post.value.published_at).toLocaleString();
 });
 </script>
 
 <style scoped>
 .root {
-	padding-bottom: 35px;
-	margin-bottom: 35px;
-
-	&:last-child {
-		margin-bottom: 25px;
-	}
-	&:not(:last-child) {
-		border-bottom: 1px solid var(--color-gray);
-	}
-
 	.post {
 		display: flex;
 		flex-direction: column;
@@ -211,30 +227,35 @@ const diffDaysStr = computed(() => {
 				display: flex;
 				gap: 12px;
 
-				&-icon-text {
+				&-item {
 					display: flex;
 					gap: 6px;
+					align-items: center;
 
-					.text {
-						font-size: 14px;
-						font-weight: 400;
-						color: var(--color-black-soft);
+					.button-icon {
+						display: flex;
+						align-items: center;
+						gap: 6px;
 
-						&.edit {
-							cursor: pointer;
-
-							&:hover {
-								color: var(--color-black);
-							}
-						}
-					}
-
-					.icon {
 						color: var(--color-dark-gray-2);
+						background: none;
+						border: none;
 						cursor: pointer;
 
 						&:hover {
 							color: var(--color-dark-gray);
+						}
+
+						.text {
+							font-size: 14px;
+							font-weight: 400;
+							color: var(--color-black-soft);
+
+							&.edit {
+								&:hover {
+									color: var(--color-black);
+								}
+							}
 						}
 					}
 				}
