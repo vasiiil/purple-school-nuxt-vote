@@ -42,9 +42,11 @@ async function onLoginClick() {
 				password: password.value,
 			},
 		});
-		authStore.setToken(data.token);
+		authStore.setToken(data);
 		navigateTo('/');
-	} catch (error) {}
+	} catch (error) {
+		alert('Неверные данные');
+	}
 }
 </script>
 
