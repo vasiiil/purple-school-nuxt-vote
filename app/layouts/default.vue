@@ -5,8 +5,4 @@
 	</div>
 </template>
 
-<style scoped>
-.layout__wrrapper {
-	display: flex;
-}
-</style>
+<style scoped></style>
