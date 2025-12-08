@@ -6,7 +6,7 @@
 				size="24px"
 			/>
 		</NuxtLink>
-		<NuxtLink to="/error404">
+		<NuxtLink to="/auth/login">
 			<Icon
 				name="icons:exit"
 				size="24px"
@@ -20,7 +20,7 @@
 	position: fixed;
 	left: 0;
 	top: 0;
-	
+
 	height: 100vh;
 	padding: 42px 28px 45px;
 	display: flex;

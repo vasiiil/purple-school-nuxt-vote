@@ -40,8 +40,7 @@
 <script setup lang="ts">
 import type { IGetPostsResponse } from '~/interfaces/post.interface';
 
-const config = useRuntimeConfig();
-const apiUrl = config.public.apiurl;
+const { apiUrl } = useApi();
 
 const route = useRoute();
 const router = useRouter();
