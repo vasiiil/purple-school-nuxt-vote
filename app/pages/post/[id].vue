@@ -22,6 +22,19 @@ const { data: post } = await useFetch<IPost>(`${apiUrl}/posts/${id.value}`);
 function goBack() {
 	router.go(-1);
 }
+const contentDescription = computed(() => {
+	if (!post.value) {
+		return;
+	}
+	if (post.value.content.length <= 100) {
+		return post.value.content;
+	}
+	return `${post.value.content.substring(0, 97)}...`;
+});
+useSeoMeta({
+	title: `Пост - ${post.value?.title}`,
+	description: contentDescription.value,
+});
 </script>
 
 <style scoped></style>

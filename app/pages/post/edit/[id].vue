@@ -6,4 +6,5 @@
 definePageMeta({ middleware: 'auth' });
 const route = useRoute();
 const id = ref(route.params.id);
+useHead({ title: `Редактирование поста [${id.value}]` });
 </script>

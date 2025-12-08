@@ -28,6 +28,8 @@
 <script setup lang="ts">
 import type { ILoginResponse } from '~/interfaces/auth.interface';
 
+useHead({ title: 'Вход' });
+
 const email = ref<string | undefined>();
 const password = ref<string | undefined>();
 

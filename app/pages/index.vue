@@ -40,6 +40,8 @@
 <script setup lang="ts">
 import type { IGetPostsResponse } from '~/interfaces/post.interface';
 
+useHead({ title: 'Главная' });
+
 const { apiUrl } = useApi();
 
 const route = useRoute();
