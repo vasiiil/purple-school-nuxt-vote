@@ -4,5 +4,8 @@
 
 <script setup lang="ts">
 definePageMeta({ middleware: 'auth' });
-useHead({ title: 'Создание поста' });
+useSeoMeta({
+	title: 'Создание поста',
+	description: 'Страница создания поста в VoteApp приложении',
+});
 </script>

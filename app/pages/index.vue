@@ -40,7 +40,10 @@
 <script setup lang="ts">
 import type { IGetPostsResponse } from '~/interfaces/post.interface';
 
-useHead({ title: 'Главная' });
+useSeoMeta({
+	title: 'Главная',
+	description: 'Главная страница VoteApp приложения',
+});
 
 const { apiUrl } = useApi();
 

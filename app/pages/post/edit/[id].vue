@@ -6,5 +6,8 @@
 definePageMeta({ middleware: 'auth' });
 const route = useRoute();
 const id = ref(route.params.id);
-useHead({ title: `Редактирование поста [${id.value}]` });
+useSeoMeta({
+	title: `Редактирование поста [${id.value}]`,
+	description: 'Страница редактирования поста в VoteApp приложении',
+});
 </script>
