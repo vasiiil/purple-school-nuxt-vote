@@ -12,9 +12,10 @@ import '~/assets/styles/main.css';
 
 <style scoped>
 .main-content {
-	width: 690px;
-	margin-top: 40px;
-	margin-left: 215px;
+	width: 905px;
+	min-height: 100vh;
+	padding-top: 40px;
+	padding-left: 215px;
 }
 .page-transition {
 	&-enter-active,
