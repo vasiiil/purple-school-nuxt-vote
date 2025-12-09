@@ -1,12 +1,10 @@
 <template>
 	<div class="root">
-		<div class="root">
-			<PostView
-				v-if="post"
-				:post="post"
-				full
-			/>
-		</div>
+		<PostView
+			v-if="post"
+			:post="post"
+			full
+		/>
 		<ActionButton @click="goBack">Назад</ActionButton>
 	</div>
 </template>
@@ -37,4 +35,14 @@ useSeoMeta({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+
+	::v-deep(.button) {
+		align-self: flex-start;
+	}
+}
+</style>
