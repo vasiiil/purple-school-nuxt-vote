@@ -11,7 +11,7 @@
 		<input
 			v-model="value"
 			class="input-field"
-			v-bind="inputAttrs"
+			v-bind="elementAttrs"
 		/>
 	</div>
 </template>
@@ -20,7 +20,7 @@
 import type { InputHTMLAttributes } from 'vue';
 
 interface IProps extends /* @vue-ignore */ InputHTMLAttributes {
-	inputAttrs?: InputHTMLAttributes;
+	elementAttrs?: InputHTMLAttributes;
 	icon?: string;
 }
 const { icon } = defineProps<IProps>();
