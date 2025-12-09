@@ -17,3 +17,8 @@ export interface IGetPostsResponse {
 	page_size: number;
 	total_pages: number;
 }
+
+export interface IEditPostBody {
+	title: IPost['title'];
+	content: IPost['content'];
+}
