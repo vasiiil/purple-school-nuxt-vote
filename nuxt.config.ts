@@ -27,7 +27,16 @@ export default defineNuxtConfig({
 			mode: 'out-in',
 		},
 		head: {
+			titleTemplate: '%s | VoteApp',
+			htmlAttrs: {
+				lang: 'ru',
+			},
 			link: [
+				{
+					rel: 'icon',
+					type: 'image/png',
+					href: '/favicon-32x32.png',
+				},
 				{
 					rel: 'stylesheet',
 					href: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
