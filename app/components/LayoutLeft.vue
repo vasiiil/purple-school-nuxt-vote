@@ -6,7 +6,7 @@
 				size="24px"
 			/>
 		</NuxtLink>
-		<NuxtLink to="/auth/login">
+		<NuxtLink @click="onLogoutClick" to="/auth/login">
 			<Icon
 				name="icons:exit"
 				size="24px"
@@ -14,6 +14,13 @@
 		</NuxtLink>
 	</div>
 </template>
+
+<script setup lang="ts">
+const authStore = useAuthStore()
+function onLogoutClick() {
+	authStore.resetToken();
+}
+</script>
 
 <style scoped>
 .layout__block {
