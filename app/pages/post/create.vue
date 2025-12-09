@@ -1,5 +1,5 @@
 <template>
-	<div>Post Create Page</div>
+	<PostEdit />
 </template>
 
 <script setup lang="ts">
