@@ -81,11 +81,14 @@
 					</div>
 				</div>
 				<div
-					v-if="!full"
+					v-if="!full && !!authStore.token"
 					class="post__bottom-part"
 				>
 					<div class="post__bottom-part-item">
-						<button class="button-icon">
+						<button
+							class="button-icon"
+							@click="onDeleteClick"
+						>
 							<Icon
 								name="icons:trash"
 								size="18px"
@@ -93,13 +96,16 @@
 						</button>
 					</div>
 					<div class="post__bottom-part-item">
-						<button class="button-icon">
+						<NuxtLink
+							:to="`/post/edit/${post.id}`"
+							class="button-icon"
+						>
 							<Icon
 								name="icons:edit"
 								size="18px"
 							/>
 							<div class="text edit">Изменить</div>
-						</button>
+						</NuxtLink>
 					</div>
 				</div>
 			</div>
@@ -111,12 +117,17 @@
 import type { IPost } from '~/interfaces/post.interface';
 import { diff } from '~/utils/date';
 
-const votesStore = useVotesStore();
+const emit = defineEmits<{
+	(event: 'itemDeleted'): void;
+}>();
 const props = defineProps<{
 	post: IPost;
 	full?: boolean;
 }>();
 const post = ref<IPost>(props.post);
+
+const authStore = useAuthStore();
+const votesStore = useVotesStore();
 async function onLikeClick() {
 	post.value = await votesStore.like(post.value.id);
 }
@@ -146,6 +157,14 @@ const diffDaysStr = computed(() => {
 
 	return new Date(post.value.published_at).toLocaleString();
 });
+
+const postsApi = usePostsApi();
+async function onDeleteClick() {
+	const result = await postsApi.remove(post.value.id);
+	if (result) {
+		emit('itemDeleted');
+	}
+}
 </script>
 
 <style scoped>
@@ -241,6 +260,7 @@ const diffDaysStr = computed(() => {
 						background: none;
 						border: none;
 						cursor: pointer;
+						text-decoration: none;
 
 						&:hover {
 							color: var(--color-dark-gray);
