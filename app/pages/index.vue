@@ -1,5 +1,17 @@
 <template>
 	<div class="root">
+		<div
+			class="create"
+			v-if="!!authStore.token"
+		>
+			<NuxtLink to="/post/create">
+				<Icon
+					name="icons:plus"
+					size="34px"
+				/>
+				<span>Добавить новое обновление для голосования</span>
+			</NuxtLink>
+		</div>
 		<div class="filter">
 			<div class="filter__item">
 				<NuxtLink
@@ -22,7 +34,10 @@
 			v-for="(post, index) of postsData?.posts"
 			:key="`post-view-${post.id}`"
 		>
-			<PostView :post="post" />
+			<PostView
+				:post="post"
+				@item-deleted="onPostDeleted"
+			/>
 			<div
 				v-if="index !== (postsData?.posts?.length ?? 0) - 1"
 				class="divider"
@@ -46,6 +61,7 @@ useSeoMeta({
 });
 
 const { apiUrl } = useApi();
+const authStore = useAuthStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -65,12 +81,13 @@ const query = computed(() => ({
 	page_size: route.query.page_size || 10,
 	sort: route.query.sort || 'date',
 }));
-const { data: postsData } = await useFetch<IGetPostsResponse>(
-	`${apiUrl}/posts`,
-	{
+const { data: postsData, refresh: refreshPosts } =
+	await useFetch<IGetPostsResponse>(`${apiUrl}/posts`, {
 		query,
-	}
-);
+	});
+function onPostDeleted() {
+	refreshPosts();
+}
 </script>
 
 <style scoped>
@@ -81,6 +98,18 @@ const { data: postsData } = await useFetch<IGetPostsResponse>(
 
 	.divider {
 		border-bottom: 1px solid var(--color-gray);
+	}
+}
+
+.create a {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	text-decoration: none;
+	color: var(--color-dark-gray);
+	&:hover {
+		color: var(--color-dark-gray-2);
 	}
 }
 

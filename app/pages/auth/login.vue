@@ -6,14 +6,14 @@
 				<InputField
 					v-model="email"
 					icon="email"
-					:input-attrs="{ placeholder: 'Email' }"
+					:element-attrs="{ placeholder: 'Email' }"
 				/>
 			</div>
 			<div class="login-form__fields-field">
 				<InputField
 					v-model="password"
 					icon="key"
-					:input-attrs="{ placeholder: 'Пароль', type: 'password' }"
+					:element-attrs="{ placeholder: 'Пароль', type: 'password' }"
 				/>
 			</div>
 		</div>
